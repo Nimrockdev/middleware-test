@@ -41,12 +41,34 @@ app.get('/works/:id', function(req, res, next) {
 
 app.get('/cars/:id', function(req, res, next) {
     console.log('ID:', req.params.id);
-    next();
-}, function(req, res, next) {
-    res.send([
-        { car: 1, name: 'BMW' },
-        { car: 2, name: 'Audi' }
-    ]);
+
+    let cars = [
+        { id: 1, name: 'BMW' },
+        { id: 2, name: 'Audi' },
+    ]
+
+    console.log(carSearch(cars, parseInt(req.params.id)));
+    let t = carSearch(cars, parseInt(req.params.id));
+
+    res.send({
+        t
+    })
+
 });
 
 app.listen(3005);
+
+
+function carSearch(cars, id) {
+
+    let foundCars = [];
+
+    cars.forEach(car => {
+        if (car.id == id) {
+            foundCars.push(car);
+        }
+    });
+
+    return foundCars;
+
+}
